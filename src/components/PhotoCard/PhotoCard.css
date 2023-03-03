@@ -1,0 +1,47 @@
+.photo_card {
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.photo_card .photo_card_link {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.photo_card_container {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.photo_card_container .photo_card_content {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.photo_card_container .photo_card_close_link {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}
+
+.photo_card .photo_card_image,
+.photo_card_container .photo_card_image {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.photo_card.is_open .photo_card_image {
+  visibility: hidden;
+}
