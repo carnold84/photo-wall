@@ -1,13 +1,4 @@
-import {
-  createRef,
-  RefObject,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useState,
-} from 'react';
-import PhotoCard from '../PhotoCard';
-import './PhotoGrid.css';
+import PhotoCard from "../PhotoCard";
 
 interface Photo {
   id: string;
@@ -21,7 +12,7 @@ interface Props {
 
 const PhotoGrid = ({ currentPhotoId, photos }: Props) => {
   return (
-    <div className="photo_grid">
+    <div className="h-full w-full columns-3 gap-4 [&>*]:pb-4">
       {photos?.map(({ id, url }, i) => {
         return (
           <PhotoCard
