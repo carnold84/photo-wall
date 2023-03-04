@@ -26,7 +26,11 @@ const MotionLink = motion(Link);
 
 const PhotoCard = ({ imageUrl, isOpen = false, to }: Props) => {
   const elRef = useRef<HTMLDivElement | null>(null);
-  const [modalStyles, setModalStyles] = useState<ModalStyles | null>(null);
+  const [modalInitialStyles, setModalInitialStyles] =
+    useState<ModalStyles | null>(null);
+  const [modalCloseStyles, setModalCloseStyles] = useState<ModalStyles | null>(
+    null
+  );
   const [status, setStatus] = useState<"closed" | "open">(
     isOpen ? "open" : "closed"
   );
@@ -36,7 +40,7 @@ const PhotoCard = ({ imageUrl, isOpen = false, to }: Props) => {
       if (isOpen) {
         const { height, x, y, width } = elRef.current.getBoundingClientRect();
         setStatus("open");
-        setModalStyles({
+        setModalInitialStyles({
           height,
           opacity: 1,
           x,
@@ -44,10 +48,24 @@ const PhotoCard = ({ imageUrl, isOpen = false, to }: Props) => {
           width,
         });
       } else {
-        setModalStyles(null);
+        setModalInitialStyles(null);
       }
     }
   }, [elRef.current, isOpen]);
+
+  const onModalClose = () => {
+    if (elRef.current) {
+      const { height, x, y, width } = elRef.current.getBoundingClientRect();
+      setStatus("closed");
+      setModalCloseStyles({
+        height,
+        opacity: 1,
+        x,
+        y,
+        width,
+      });
+    }
+  };
 
   const onAnimationComplete = (evt: ControlsAnimationDefinition) => {
     setStatus("closed");
@@ -69,7 +87,7 @@ const PhotoCard = ({ imageUrl, isOpen = false, to }: Props) => {
       <Link className="absolute top-0 left-0 h-full w-full" to={to} />
       {createPortal(
         <AnimatePresence>
-          {modalStyles && (
+          {modalInitialStyles && (
             <motion.div
               animate={{
                 height: "100%",
@@ -80,10 +98,10 @@ const PhotoCard = ({ imageUrl, isOpen = false, to }: Props) => {
               }}
               className="fixed top-0 left-0 h-full w-full overflow-hidden"
               exit={{
-                ...modalStyles,
+                ...modalCloseStyles,
                 transition: { delay: 0.1, ease: "easeInOut" },
               }}
-              initial={modalStyles}
+              initial={modalInitialStyles}
               onAnimationComplete={onAnimationComplete}
             >
               <div className="absolute left-0 top-0 h-full w-full">
@@ -102,6 +120,7 @@ const PhotoCard = ({ imageUrl, isOpen = false, to }: Props) => {
                     transition: { duration: 0.1 },
                   }}
                   initial={{ transform: "translateY(-100%)" }}
+                  onClick={onModalClose}
                   to="/"
                 >
                   <svg
