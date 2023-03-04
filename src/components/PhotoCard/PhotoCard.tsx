@@ -29,6 +29,17 @@ interface Props {
 
 const MotionLink = motion(Link);
 
+const imgVariants = {
+  hover: {
+    scale: 1.1,
+    transition: {
+      duration: 0.4,
+      type: "tween",
+      ease: "easeIn",
+    },
+  },
+};
+
 const PhotoCard = ({ imageUrl, isOpen = false, to }: Props) => {
   const elRef = useRef<HTMLDivElement | null>(null);
   const [modalInitialStyles, setModalInitialStyles] =
@@ -94,17 +105,19 @@ const PhotoCard = ({ imageUrl, isOpen = false, to }: Props) => {
   };
 
   return (
-    <div
+    <motion.div
       className={classnames("relative flex w-full overflow-hidden", {
         is_open: isOpen,
       })}
       ref={elRef}
+      whileHover="hover"
     >
-      <img
+      <motion.img
         className={classnames("h-full w-full object-cover", {
           invisible: status !== "closed",
         })}
         src={imageUrl}
+        variants={imgVariants}
       />
       <Link
         className="absolute top-0 left-0 h-full w-full"
@@ -117,6 +130,7 @@ const PhotoCard = ({ imageUrl, isOpen = false, to }: Props) => {
             <motion.div
               animate={{
                 height: "100%",
+                scale: 1,
                 transition: { delay: 0.05, duration: 0.3, ease: "easeInOut" },
                 x: 0,
                 y: 0,
@@ -127,7 +141,10 @@ const PhotoCard = ({ imageUrl, isOpen = false, to }: Props) => {
                 ...modalCloseStyles,
                 transition: { delay: 0.1, ease: "easeInOut" },
               }}
-              initial={modalInitialStyles}
+              initial={{
+                ...modalInitialStyles,
+                scale: 1.1,
+              }}
               onAnimationComplete={onAnimationComplete}
               onMouseMove={onModalMouseMove}
             >
@@ -193,7 +210,7 @@ const PhotoCard = ({ imageUrl, isOpen = false, to }: Props) => {
         </AnimatePresence>,
         document.querySelector("#portal")!
       )}
-    </div>
+    </motion.div>
   );
 };
 

@@ -8,8 +8,16 @@ const photos = [
     url: "images/image1.jpg",
   },
   {
+    id: "image-10",
+    url: "images/image10.jpg",
+  },
+  {
     id: "image-2",
     url: "images/image2.jpg",
+  },
+  {
+    id: "image-14",
+    url: "images/image14.jpg",
   },
   {
     id: "image-3",
@@ -20,12 +28,20 @@ const photos = [
     url: "images/image4.jpg",
   },
   {
+    id: "image-13",
+    url: "images/image13.jpg",
+  },
+  {
+    id: "image-12",
+    url: "images/image12.jpg",
+  },
+  {
     id: "image-5",
     url: "images/image5.jpg",
   },
   {
-    id: "image-6",
-    url: "images/image6.jpg",
+    id: "image-11",
+    url: "images/image11.jpg",
   },
   {
     id: "image-7",
