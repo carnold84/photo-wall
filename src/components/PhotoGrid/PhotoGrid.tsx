@@ -12,7 +12,7 @@ interface Props {
 
 const PhotoGrid = ({ currentPhotoId, photos }: Props) => {
   return (
-    <div className="h-full w-full columns-2 gap-4 md:columns-3 [&>*]:mb-4">
+    <div className="h-full w-full columns-2 gap-4 md:columns-3 lg:columns-4 [&>*]:mb-4">
       {photos?.map(({ id, url }, i) => {
         return (
           <PhotoCard

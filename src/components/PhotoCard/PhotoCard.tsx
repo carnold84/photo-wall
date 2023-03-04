@@ -4,7 +4,7 @@ import {
   ControlsAnimationDefinition,
   motion,
 } from "framer-motion";
-import { useLayoutEffect, useRef, useState } from "react";
+import { MouseEvent, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 
@@ -14,6 +14,11 @@ interface ModalStyles {
   x: number;
   y: number;
   width: number;
+}
+
+interface CloseBtnPosition {
+  x: number;
+  y: number;
 }
 
 interface Props {
@@ -31,6 +36,8 @@ const PhotoCard = ({ imageUrl, isOpen = false, to }: Props) => {
   const [modalCloseStyles, setModalCloseStyles] = useState<ModalStyles | null>(
     null
   );
+  const [closeBtnPosition, setCloseBtnPosition] =
+    useState<CloseBtnPosition | null>(null);
   const [status, setStatus] = useState<"closed" | "open">(
     isOpen ? "open" : "closed"
   );
@@ -57,6 +64,7 @@ const PhotoCard = ({ imageUrl, isOpen = false, to }: Props) => {
     if (elRef.current) {
       const { height, x, y, width } = elRef.current.getBoundingClientRect();
       setStatus("closed");
+      setCloseBtnPosition(null);
       setModalCloseStyles({
         height,
         opacity: 1,
@@ -65,6 +73,20 @@ const PhotoCard = ({ imageUrl, isOpen = false, to }: Props) => {
         width,
       });
     }
+  };
+
+  const onModalMouseMove = (evt: MouseEvent<HTMLDivElement>) => {
+    setCloseBtnPosition({
+      x: evt.clientX,
+      y: evt.clientY,
+    });
+  };
+
+  const onLinkClick = (evt: MouseEvent<HTMLAnchorElement>) => {
+    setCloseBtnPosition({
+      x: evt.clientX,
+      y: evt.clientY,
+    });
   };
 
   const onAnimationComplete = (evt: ControlsAnimationDefinition) => {
@@ -84,7 +106,11 @@ const PhotoCard = ({ imageUrl, isOpen = false, to }: Props) => {
         })}
         src={imageUrl}
       />
-      <Link className="absolute top-0 left-0 h-full w-full" to={to} />
+      <Link
+        className="absolute top-0 left-0 h-full w-full"
+        onClick={onLinkClick}
+        to={to}
+      />
       {createPortal(
         <AnimatePresence>
           {modalInitialStyles && (
@@ -96,51 +122,70 @@ const PhotoCard = ({ imageUrl, isOpen = false, to }: Props) => {
                 y: 0,
                 width: "100%",
               }}
-              className="fixed top-0 left-0 h-full w-full overflow-hidden"
+              className="fixed top-0 left-0 h-full w-full cursor-none overflow-hidden"
               exit={{
                 ...modalCloseStyles,
                 transition: { delay: 0.1, ease: "easeInOut" },
               }}
               initial={modalInitialStyles}
               onAnimationComplete={onAnimationComplete}
+              onMouseMove={onModalMouseMove}
             >
               <div className="absolute left-0 top-0 h-full w-full">
-                <MotionLink
-                  animate={{
-                    transform: "translateY(0%)",
-                    transition: {
-                      delay: 0.3,
-                      duration: 0.1,
-                      ease: "easeInOut",
-                    },
-                  }}
-                  className="absolute left-1/2 top-0 -translate-x-1/2 bg-white p-3"
-                  exit={{
-                    transform: "translateY(-100%)",
-                    transition: { duration: 0.1 },
-                  }}
-                  initial={{ transform: "translateY(-100%)" }}
+                <AnimatePresence>
+                  {closeBtnPosition && (
+                    <MotionLink
+                      animate={{
+                        opacity: 1,
+                        scale: 1,
+                        transition: {
+                          duration: 0.2,
+                          ease: "easeInOut",
+                        },
+                      }}
+                      className="pointer-events-none absolute cursor-none"
+                      exit={{
+                        opacity: 0,
+                        scale: 0,
+                        transition: { duration: 0.1 },
+                      }}
+                      initial={{
+                        opacity: 0,
+                        scale: 0,
+                      }}
+                      style={{
+                        left: `${closeBtnPosition?.x}px`,
+                        top: `${closeBtnPosition?.y}px`,
+                      }}
+                      to="/"
+                    >
+                      <div className="absolute -translate-x-1/2 -translate-y-1/2 bg-white p-3">
+                        <svg
+                          width="24px"
+                          height="24px"
+                          strokeWidth="1.5"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          color="#000000"
+                        >
+                          <path
+                            d="M6.758 17.243L12.001 12m5.243-5.243L12 12m0 0L6.758 6.757M12.001 12l5.243 5.243"
+                            stroke="#000000"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          ></path>
+                        </svg>
+                      </div>
+                    </MotionLink>
+                  )}
+                </AnimatePresence>
+                <Link
+                  className="absolute left-0 top-0 h-full w-full cursor-none"
                   onClick={onModalClose}
                   to="/"
-                >
-                  <svg
-                    width="24px"
-                    height="24px"
-                    strokeWidth="1.5"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    color="#000000"
-                  >
-                    <path
-                      d="M6.758 17.243L12.001 12m5.243-5.243L12 12m0 0L6.758 6.757M12.001 12l5.243 5.243"
-                      stroke="#000000"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    ></path>
-                  </svg>
-                </MotionLink>
+                />
                 <img className="h-full w-full object-cover" src={imageUrl} />
               </div>
             </motion.div>
