@@ -22,7 +22,13 @@ interface CloseBtnPosition {
 }
 
 interface Props {
-  imageUrl: string;
+  imageUrls: {
+    xs: string;
+    sm: string;
+    md: string;
+    lg: string;
+    xl: string;
+  };
   isOpen?: boolean;
   to: string;
 }
@@ -40,7 +46,7 @@ const imgVariants = {
   },
 };
 
-const PhotoCard = ({ imageUrl, isOpen = false, to }: Props) => {
+const PhotoCard = ({ imageUrls, isOpen = false, to }: Props) => {
   const elRef = useRef<HTMLDivElement | null>(null);
   const [modalInitialStyles, setModalInitialStyles] =
     useState<ModalStyles | null>(null);
@@ -116,7 +122,7 @@ const PhotoCard = ({ imageUrl, isOpen = false, to }: Props) => {
         className={classnames("h-full w-full object-cover", {
           invisible: status !== "closed",
         })}
-        src={imageUrl}
+        src={imageUrls.lg}
         variants={imgVariants}
       />
       <Link
@@ -130,20 +136,18 @@ const PhotoCard = ({ imageUrl, isOpen = false, to }: Props) => {
             <motion.div
               animate={{
                 height: "100%",
-                scale: 1,
                 transition: { delay: 0.05, duration: 0.3, ease: "easeInOut" },
                 x: 0,
                 y: 0,
                 width: "100%",
               }}
-              className="fixed top-0 left-0 h-full w-full cursor-none overflow-hidden"
+              className="fixed top-0 left-0 flex h-full w-full cursor-none items-center overflow-hidden bg-white"
               exit={{
                 ...modalCloseStyles,
                 transition: { delay: 0.1, ease: "easeInOut" },
               }}
               initial={{
                 ...modalInitialStyles,
-                scale: 1.1,
               }}
               onAnimationComplete={onAnimationComplete}
               onMouseMove={onModalMouseMove}
@@ -176,7 +180,7 @@ const PhotoCard = ({ imageUrl, isOpen = false, to }: Props) => {
                       }}
                       to="/"
                     >
-                      <div className="absolute -translate-x-1/2 -translate-y-1/2 bg-white p-3">
+                      <div className="absolute -translate-x-1/2 -translate-y-1/2 border border-slate-200 bg-white p-3">
                         <svg
                           width="24px"
                           height="24px"
@@ -184,11 +188,11 @@ const PhotoCard = ({ imageUrl, isOpen = false, to }: Props) => {
                           viewBox="0 0 24 24"
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg"
-                          color="#000000"
+                          className="text-slate-700"
                         >
                           <path
+                            className="stroke-slate-600"
                             d="M6.758 17.243L12.001 12m5.243-5.243L12 12m0 0L6.758 6.757M12.001 12l5.243 5.243"
-                            stroke="#000000"
                             strokeWidth="1.5"
                             strokeLinecap="round"
                             strokeLinejoin="round"
@@ -203,7 +207,25 @@ const PhotoCard = ({ imageUrl, isOpen = false, to }: Props) => {
                   onClick={onModalClose}
                   to="/"
                 />
-                <img className="h-full w-full object-cover" src={imageUrl} />
+                <motion.img
+                  animate={{
+                    scale: 1,
+                    transition: {
+                      delay: 0.05,
+                      duration: 0.3,
+                      ease: "easeInOut",
+                    },
+                  }}
+                  className="h-full w-full object-contain"
+                  exit={{
+                    scale: 1,
+                    transition: { delay: 0.1, ease: "easeInOut" },
+                  }}
+                  initial={{
+                    scale: 1.1,
+                  }}
+                  src={imageUrls.lg}
+                />
               </div>
             </motion.div>
           )}
