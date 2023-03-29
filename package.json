@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port=3000",
-    "build": "tsc && vite build --outDir docs",
+    "build": "tsc && vite build --outDir docs --base /photo-wall/",
     "preview": "vite preview --outDir docs"
   },
   "dependencies": {
