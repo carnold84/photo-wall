@@ -69,6 +69,7 @@ const PhotoCard = ({
       ? `${imageUrls.xs} 500w, ${imageUrls.sm} 800w, ${imageUrls.md} 1024w, ${imageUrls.lg} 1440w, ${imageUrls.xl} 1920w`
       : `${imageUrls.xs} 320w, ${imageUrls.sm} 400w, ${imageUrls.md} 533w, ${imageUrls.lg} 613w, ${imageUrls.xl} 720w`;
   }, [imageUrls, orientation]);
+  const hasTouch = "ontouchstart" in window;
 
   useLayoutEffect(() => {
     if (elRef.current) {
@@ -162,7 +163,7 @@ const PhotoCard = ({
                 ...modalInitialStyles,
               }}
               onAnimationComplete={onAnimationComplete}
-              onMouseMove={onModalMouseMove}
+              onMouseMove={!hasTouch ? onModalMouseMove : undefined}
             >
               <div className="absolute left-0 top-0 h-full w-full">
                 <AnimatePresence>
@@ -186,13 +187,28 @@ const PhotoCard = ({
                         opacity: 0,
                         scale: 0,
                       }}
-                      style={{
-                        left: `${closeBtnPosition?.x}px`,
-                        top: `${closeBtnPosition?.y}px`,
-                      }}
+                      style={
+                        !hasTouch
+                          ? {
+                              left: `${closeBtnPosition?.x}px`,
+                              top: `${closeBtnPosition?.y}px`,
+                            }
+                          : {
+                              right: 0,
+                              top: 0,
+                            }
+                      }
                       to="/"
                     >
-                      <div className="absolute -translate-x-1/2 -translate-y-1/2 border border-slate-200 bg-white p-3">
+                      <div
+                        className={classnames(
+                          "absolute border border-slate-200 bg-white p-3",
+                          {
+                            "-translate-x-1/2 -translate-y-1/2": !hasTouch,
+                            "-translate-x-full": hasTouch,
+                          }
+                        )}
+                      >
                         <svg
                           width="24px"
                           height="24px"
