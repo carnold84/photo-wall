@@ -28,6 +28,18 @@ const photos = [
     },
   },
   {
+    id: "image-5",
+    photographer: "Nhan Hoang",
+    title: "Sapa, Sa Pa, Lao Cai, Vietnam",
+    urls: {
+      xs: "images/image5/1_xs.jpg",
+      sm: "images/image5/2_sm.jpg",
+      md: "images/image5/3_md.jpg",
+      lg: "images/image5/4_lg.jpg",
+      xl: "images/image5/5_xl.jpg",
+    },
+  },
+  {
     id: "image-3",
     photographer: "Marek Piwnicki",
     title:
@@ -41,21 +53,9 @@ const photos = [
     },
   },
   {
-    id: "image-6",
+    id: "image-4",
     photographer: "Yuanpang Wa",
     title: "Yosemite Waterfall, Yosemite National Park, California",
-    urls: {
-      xs: "images/image6/1_xs.jpg",
-      sm: "images/image6/2_sm.jpg",
-      md: "images/image6/3_md.jpg",
-      lg: "images/image6/4_lg.jpg",
-      xl: "images/image6/5_xl.jpg",
-    },
-  },
-  {
-    id: "image-4",
-    photographer: "Nhan Hoang",
-    title: "Sapa, Sa Pa, Lao Cai, Vietnam",
     urls: {
       xs: "images/image4/1_xs.jpg",
       sm: "images/image4/2_sm.jpg",
@@ -65,15 +65,39 @@ const photos = [
     },
   },
   {
-    id: "image-5",
+    id: "image-6",
+    photographer: "AXP Photography",
+    title: "Burano, Venice, Metropolitan City of Venice, Italy",
+    urls: {
+      xs: "images/image6/1_xs.jpg",
+      sm: "images/image6/2_sm.jpg",
+      md: "images/image6/3_md.jpg",
+      lg: "images/image6/4_lg.jpg",
+      xl: "images/image6/5_xl.jpg",
+    },
+  },
+  {
+    id: "image-8",
     photographer: "Nk Ni",
     title: "Berlin, Germany",
     urls: {
-      xs: "images/image5/1_xs.jpg",
-      sm: "images/image5/2_sm.jpg",
-      md: "images/image5/3_md.jpg",
-      lg: "images/image5/4_lg.jpg",
-      xl: "images/image5/5_xl.jpg",
+      xs: "images/image8/1_xs.jpg",
+      sm: "images/image8/2_sm.jpg",
+      md: "images/image8/3_md.jpg",
+      lg: "images/image8/4_lg.jpg",
+      xl: "images/image8/5_xl.jpg",
+    },
+  },
+  {
+    id: "image-7",
+    photographer: "Tom Podmore",
+    title: "Metropol Parasol, Plaza de la Encarnación, Seville, Spain",
+    urls: {
+      xs: "images/image7/1_xs.jpg",
+      sm: "images/image7/2_sm.jpg",
+      md: "images/image7/3_md.jpg",
+      lg: "images/image7/4_lg.jpg",
+      xl: "images/image7/5_xl.jpg",
     },
   },
 ];

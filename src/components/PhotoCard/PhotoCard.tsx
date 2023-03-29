@@ -4,7 +4,7 @@ import {
   ControlsAnimationDefinition,
   motion,
 } from "framer-motion";
-import { MouseEvent, useLayoutEffect, useRef, useState } from "react";
+import { MouseEvent, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 
@@ -30,6 +30,7 @@ interface Props {
     xl: string;
   };
   isOpen?: boolean;
+  orientation?: "landscape" | "portrait";
   to: string;
 }
 
@@ -46,7 +47,12 @@ const imgVariants = {
   },
 };
 
-const PhotoCard = ({ imageUrls, isOpen = false, to }: Props) => {
+const PhotoCard = ({
+  imageUrls,
+  isOpen = false,
+  orientation = "landscape",
+  to,
+}: Props) => {
   const elRef = useRef<HTMLDivElement | null>(null);
   const [modalInitialStyles, setModalInitialStyles] =
     useState<ModalStyles | null>(null);
@@ -58,6 +64,11 @@ const PhotoCard = ({ imageUrls, isOpen = false, to }: Props) => {
   const [status, setStatus] = useState<"closed" | "open">(
     isOpen ? "open" : "closed"
   );
+  const srcSet = useMemo(() => {
+    return orientation === "landscape"
+      ? `${imageUrls.xs} 500w, ${imageUrls.sm} 800w, ${imageUrls.md} 1024w, ${imageUrls.lg} 1440w, ${imageUrls.xl} 1920w`
+      : `${imageUrls.xs} 320w, ${imageUrls.sm} 400w, ${imageUrls.md} 533w, ${imageUrls.lg} 613w, ${imageUrls.xl} 720w`;
+  }, [imageUrls, orientation]);
 
   useLayoutEffect(() => {
     if (elRef.current) {
@@ -122,7 +133,8 @@ const PhotoCard = ({ imageUrls, isOpen = false, to }: Props) => {
         className={classnames("h-full w-full object-cover", {
           invisible: status !== "closed",
         })}
-        src={imageUrls.lg}
+        src={imageUrls.xs}
+        srcSet={srcSet}
         variants={imgVariants}
       />
       <Link
@@ -224,7 +236,8 @@ const PhotoCard = ({ imageUrls, isOpen = false, to }: Props) => {
                   initial={{
                     scale: 1.1,
                   }}
-                  src={imageUrls.lg}
+                  src={imageUrls.xs}
+                  srcSet={srcSet}
                 />
               </div>
             </motion.div>
