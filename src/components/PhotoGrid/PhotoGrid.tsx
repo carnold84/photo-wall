@@ -30,13 +30,14 @@ const PhotoGrid = ({ currentPhotoId, photos }: Props) => {
   }, [currentPhotoId]);
 
   return (
-    <div className="h-full w-full columns-2 gap-8 md:columns-3 lg:columns-4 [&>*]:mb-8">
-      {photos?.map(({ id, urls }, i) => {
+    <div className="h-full w-full columns-1 gap-8 sm:columns-2 md:columns-3 lg:columns-4 [&>*]:mb-4 sm:[&>*]:mb-8">
+      {photos?.map(({ id, title, urls }, i) => {
         return (
           <PhotoCard
             imageUrls={urls}
             isOpen={currentId === id}
             key={id}
+            title={title}
             to={`/${id}`}
           />
         );

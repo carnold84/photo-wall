@@ -31,6 +31,7 @@ interface Props {
   };
   isOpen?: boolean;
   orientation?: "landscape" | "portrait";
+  title?: string;
   to: string;
 }
 
@@ -51,6 +52,7 @@ const PhotoCard = ({
   imageUrls,
   isOpen = false,
   orientation = "landscape",
+  title,
   to,
 }: Props) => {
   const elRef = useRef<HTMLDivElement | null>(null);
@@ -131,6 +133,7 @@ const PhotoCard = ({
       whileHover="hover"
     >
       <motion.img
+        alt={title}
         className={classnames("h-full w-full object-cover", {
           invisible: status !== "closed",
         })}
@@ -141,6 +144,7 @@ const PhotoCard = ({
       <Link
         className="absolute top-0 left-0 h-full w-full"
         onClick={onLinkClick}
+        title={title}
         to={to}
       />
       {createPortal(
@@ -198,6 +202,7 @@ const PhotoCard = ({
                               top: 0,
                             }
                       }
+                      title={`Close ${title}`}
                       to="/"
                     >
                       <div
@@ -236,6 +241,7 @@ const PhotoCard = ({
                   to="/"
                 />
                 <motion.img
+                  alt={title}
                   animate={{
                     scale: 1,
                     transition: {
