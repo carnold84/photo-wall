@@ -8,6 +8,8 @@ import { MouseEvent, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 
+import Picture from "../Picture";
+
 interface ModalStyles {
   height: number;
   opacity: number;
@@ -22,6 +24,8 @@ interface CloseBtnPosition {
 }
 
 interface Props {
+  defaultHeight: number;
+  defaultWidth: number;
   imageUrls: {
     xs: string;
     sm: string;
@@ -49,6 +53,8 @@ const imgVariants = {
 };
 
 const PhotoCard = ({
+  defaultHeight,
+  defaultWidth,
   imageUrls,
   isOpen = false,
   orientation = "landscape",
@@ -72,6 +78,7 @@ const PhotoCard = ({
       : `${imageUrls.xs} 320w, ${imageUrls.sm} 400w, ${imageUrls.md} 533w, ${imageUrls.lg} 613w, ${imageUrls.xl} 720w`;
   }, [imageUrls, orientation]);
   const hasTouch = "ontouchstart" in window;
+  const isLandscape = defaultWidth > defaultHeight;
 
   useLayoutEffect(() => {
     if (elRef.current) {
@@ -132,15 +139,20 @@ const PhotoCard = ({
       ref={elRef}
       whileHover="hover"
     >
-      <motion.img
-        alt={title}
+      <motion.div
         className={classnames("h-full w-full object-cover", {
           invisible: status !== "closed",
         })}
-        src={imageUrls.xs}
-        srcSet={srcSet}
         variants={imgVariants}
-      />
+      >
+        <Picture
+          alt={title}
+          height={isLandscape ? 100 : 200}
+          src={imageUrls.xs}
+          srcSet={srcSet}
+          width={200}
+        />
+      </motion.div>
       <Link
         className="absolute top-0 left-0 h-full w-full"
         onClick={onLinkClick}
