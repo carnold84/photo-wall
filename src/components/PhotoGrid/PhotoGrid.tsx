@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import PhotoCard from "../PhotoCard";
 
 interface Photo {
+  defaultHeight: number;
+  defaultWidth: number;
   id: string;
   photographer: string;
   title: string;
@@ -31,9 +33,11 @@ const PhotoGrid = ({ currentPhotoId, photos }: Props) => {
 
   return (
     <div className="h-full w-full columns-1 gap-8 sm:columns-2 md:columns-3 lg:columns-4 [&>*]:mb-4 sm:[&>*]:mb-8">
-      {photos?.map(({ id, title, urls }, i) => {
+      {photos?.map(({ defaultHeight, defaultWidth, id, title, urls }, i) => {
         return (
           <PhotoCard
+            defaultHeight={defaultHeight}
+            defaultWidth={defaultWidth}
             imageUrls={urls}
             isOpen={currentId === id}
             key={id}

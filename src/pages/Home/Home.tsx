@@ -4,6 +4,8 @@ import PhotoGrid from "../../components/PhotoGrid";
 
 const photos = [
   {
+    defaultHeight: 800,
+    defaultWidth: 480,
     id: "image-1",
     photographer: "Zayn Shah",
     title: "Las Vegas, Las Vegas, United States",
@@ -16,6 +18,8 @@ const photos = [
     },
   },
   {
+    defaultHeight: 682,
+    defaultWidth: 1024,
     id: "image-2",
     photographer: "Thilak Mohan",
     title: "Nusa Penida, Klungkung Regency, Bali, Indonesia",
@@ -28,6 +32,8 @@ const photos = [
     },
   },
   {
+    defaultHeight: 682,
+    defaultWidth: 1024,
     id: "image-5",
     photographer: "Nhan Hoang",
     title: "Sapa, Sa Pa, Lao Cai, Vietnam",
@@ -40,6 +46,8 @@ const photos = [
     },
   },
   {
+    defaultHeight: 800,
+    defaultWidth: 584,
     id: "image-3",
     photographer: "Marek Piwnicki",
     title:
@@ -53,6 +61,8 @@ const photos = [
     },
   },
   {
+    defaultHeight: 800,
+    defaultWidth: 533,
     id: "image-4",
     photographer: "Yuanpang Wa",
     title: "Yosemite Waterfall, Yosemite National Park, California",
@@ -65,6 +75,8 @@ const photos = [
     },
   },
   {
+    defaultHeight: 774,
+    defaultWidth: 1024,
     id: "image-6",
     photographer: "AXP Photography",
     title: "Burano, Venice, Metropolitan City of Venice, Italy",
@@ -77,6 +89,8 @@ const photos = [
     },
   },
   {
+    defaultHeight: 682,
+    defaultWidth: 1024,
     id: "image-8",
     photographer: "Nk Ni",
     title: "Berlin, Germany",
@@ -89,6 +103,8 @@ const photos = [
     },
   },
   {
+    defaultHeight: 1177,
+    defaultWidth: 800,
     id: "image-7",
     photographer: "Tom Podmore",
     title: "Metropol Parasol, Plaza de la Encarnación, Seville, Spain",

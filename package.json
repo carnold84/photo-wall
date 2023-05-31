@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build --outDir docs --base /photo-wall/",
+    "build:github": "tsc && vite build --outDir docs --base /photo-wall/",
+    "build:dev": "tsc && vite build --outDir docs",
     "preview": "vite preview --outDir docs"
   },
   "dependencies": {
